@@ -1,0 +1,2 @@
+# OE_17autumn_Microservice_Skills
+Hősök tulajdonsgai
