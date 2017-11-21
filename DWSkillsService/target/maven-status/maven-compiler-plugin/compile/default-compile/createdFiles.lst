@@ -1,0 +1,6 @@
+hu\heroesofempires\dwskillsservice\SkillsServiceConfiguration.class
+hu\heroesofempires\dwskillsservice\SkillsServiceApplication.class
+hu\heroesofempires\dwskillsservice\resources\HTTPResult.class
+hu\heroesofempires\dwskillsservice\api\RequestHandler.class
+hu\heroesofempires\dwskillsservice\db\SkillsController.class
+hu\heroesofempires\dwskillsservice\resources\Skill.class
