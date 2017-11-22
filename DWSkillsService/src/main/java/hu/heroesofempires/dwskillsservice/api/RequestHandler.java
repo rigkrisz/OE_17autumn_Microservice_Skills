@@ -153,11 +153,7 @@ public class RequestHandler
                     if (_Species.get(index).toUpperCase().equals(skill.getSpecies().toUpperCase())
                             && (_Percentage.get(index) >= skill.getHybridPercentRequirement()))
                     {
-                        found = new Skill();
-                        found.setName(skill.getName());
-                        found.setDescription(skill.getDescription());
-                        found.setSpecies(skill.getSpecies());
-                        found.setHybridPercentRequirement(skill.getHybridPercentRequirement());
+                        found = skill;
                         skills.add(found);
                     }
                     index++;

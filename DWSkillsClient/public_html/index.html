@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>SkillsService</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+        <script src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <link rel="stylesheet" href="http://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+        <style>
+            html, body
+            {
+                height: 100%;
+                margin: 0;
+            }
+            .wrapper
+            {
+                height: 100%;
+                margin: 0;
+                text-align: center;
+            }
+            .content
+            {
+                height: 82%;
+                width: 100%;
+                padding: 5% 5% 5% 5%;
+                overflow: auto;
+            }
+            .footer
+            {
+                color: crimson;
+                font-weight: bold;
+                text-align: center;
+            }
+            label
+            {
+                font-weight: bold;
+                margin-top: 10px;
+            }
+        </style>
+        <script>
+            var baseurl = "http://80.211.148.10:8080/skills/";
+            var selectedtab = "#skills-button";
+            
+            function loadSkills()
+            {                
+                $.ajax({url: baseurl + "all", type: 'GET',
+                success: function(result)
+                {
+                    if (result["success"])
+                    {
+                        $("#skills-table > tbody").html("");
+                        if (result["data"].length == 0)
+                        {
+                            $("#skills-table > tbody").append("<tr><td colspan='5'>No skills found</td><td style='display: none;'></td><td style='display: none;'></td><td style='display: none;'></td><td style='display: none;'></td>");
+                        }
+                        else
+                        {
+                            for (var i in result["data"])
+                            {
+                                var item = result["data"][i];
+                                $("#skills-table > tbody").append("<tr><td>" + item["skillId"] + "</td><td>" + item["name"] + "</td><td>" + item["description"] + "</td><td>" + item["species"] + "</td><td>" + item["hybridPercentRequirement"] + "</td><td><a href='#' onclick='loadSkill(" + item["skillId"] + ")'>Edit</a> - <a href='#' onclick='deleteSkill(" + item["skillId"] + ")'>Delete</a></td></tr>");
+                            }
+                        }
+                        $("#skills-table").DataTable();
+                        $("#skills-table").show();
+                    }
+                    else
+                    {
+                        $(".footer").html("");
+                        $(".footer").append("<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>" + result['message'] + "</strong></div>");
+                    }
+                },
+                error: function(result)
+                {
+                    $(".footer").html("");
+                    $(".footer").append("<h1>" + result["message"] + "</h1>");
+                }});
+            }
+            loadSkills();
+        </script>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="header">
+                <nav class="nav nav-pills nav-fill">
+                    <button id="skills-button" class="nav-item nav-link active" onclick="SelectTab('skills-button')"><b>Show all skills</b></button>
+                    <button id="addskill-button" class="nav-item nav-link" onclick="SelectTab('addskill-button')"><b>Add new skill</b></button>
+                    <button id="heroes-button" class="nav-item nav-link" onclick="SelectTab('heroes-button')"><b>Show skills of a hero</b></button>
+                </nav>
+            </div>
+            <div class="content">
+                <div id="skill-tab" style="display:none;">
+                    <form style="width:60%; margin-left:20%; margin-right:20%;">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name">
+                            <label for="description">Description</label>
+                            <input type="text" class="form-control" id="description">
+                            <label for="description">Species</label>
+                            <input type="text" class="form-control" id="species">
+                            <label for="description">Hybrid percentage requirement</label>
+                            <input type="text" class="form-control" id="hybridPercentRequirement">
+                            <input type="hidden" class="form-control" id="skillId">
+                        </div>
+                        <button id="create-button" type="button" onclick="createSkill()" class="btn btn-primary">Create</button>
+                        <button id="modify-button" type="button" onclick="saveSkill()" class="btn btn-primary" style="display:none;">Modify</button>
+                    </form>
+                </div>
+                <div id="skills-tab">
+                    <table id="skills-table" style="display:none;">
+                        <thead>
+                            <tr><th>ID</th><th>Name</th><th>Description</th><th>Species</th><th>Hybrid percentage<br/>requirement</th><th>Actions</th></tr>
+                        </thead>
+                        <tbody>
+            
+                        </tbody>
+                    </table>
+                </div>
+                <div id="heroes-tab" style="display:none;">
+                    <table id="specresult" style="display:none;">
+                        <thead>
+                            <tr><th>ID</th><th>Name</th><th>Description</th><th>Species</th><th>Hybrid percentage<br/>requirement</th></tr>
+                        </thead>
+                        <tbody>
+            
+                        </tbody>
+                    </table>
+                    <form style="width:60%; margin-left:20%; margin-right:20%;">
+                        <div class="form-group">
+                            <label for="name">Species with percentage</label>
+                            <input type="text" class="form-control" id="speciespercentage" placeholder='dwarf,20,elf,50,human,30'>
+                        </div>
+                        <button type="button" onclick="showSkillsSpecies()" class="btn btn-primary">Show</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer">
+            </div>
+        </div>
+        <script>
+            function SelectTab(id)
+            {
+                $(selectedtab).removeClass("active");
+                selectedtab = "#" + id;
+                $(selectedtab).addClass("active");
+                if (id == "skills-button")
+                {
+                    $("#skill-tab").hide();
+                    $("#heroes-tab").hide();
+                    $("#skills-tab").show();
+                    loadSkills();
+                }
+                else if (id == "addskill-button")
+                {
+                    $("#skills-tab").hide();
+                    $("#heroes-tab").hide();
+                    $("#skill-tab").show();
+                    $("#name").val("");
+                    $("#description").val("");
+                    $("#species").val("");
+                    $("#hybridPercentRequirement").val("");
+                    $("#create-button").show();
+                    $("#modify-button").hide();
+                }
+                else if (id == "heroes-button")
+                {
+                    $("#skills-tab").hide();
+                    $("#skill-tab").hide();
+                    $("#heroes-tab").show();
+                    $("#speciespercentage").val("");
+                }
+            };
+            
+            function deleteSkill(id)
+            {
+                $.ajax({url: baseurl + id, type: 'DELETE',
+                success: function(result)
+                {
+                    if (result["success"])
+                    {
+                        $(".footer").html("");
+                        $(".footer").append("<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Skill deleted.</strong></div>");
+                        loadSkills();
+                    }
+                    else
+                    {
+                        $(".footer").html("");
+                        $(".footer").append("<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>" + result['message'] + "</strong></div>");
+                    }          
+                },
+                error: function(result)
+                {
+                    $(".footer").html("");
+                    $(".footer").append("<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Error occured.</strong></div>");
+                }});
+            };
+            
+            function createSkill()
+            {
+                $.ajax({url: baseurl + "new", type: 'POST',
+                    data:
+                    {
+                        name: $("#name").val(),
+                        description: $("#description").val(),
+                        species: $("#species").val(),
+                        hybridPercentRequirement: $("#hybridPercentRequirement").val()
+                    },
+                    success: function(result)
+                    {
+                        if (result["success"])
+                        {
+                            $(".footer").html("");
+                            $(".footer").append("<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Skill created.</strong></div>");
+                            loadTable();
+                        }
+                        else
+                        {
+                            $(".footer").html("");
+                            $(".footer").append("<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>" + result['message'] + "</strong></div>");
+                        }          
+                    },
+                    error: function(result)
+                    {
+                        $(".footer").html("");
+                        $(".footer").append("<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Error occured.</strong></div>");
+                    }
+                });
+            };
+            
+            function saveSkill()
+            {
+                id = $("#skillId").val();
+                $.ajax({url: baseurl + id, type: 'PUT',
+                data:
+                {
+                    name: $("#name").val(),
+                    description: $("#description").val(),
+                    species: $("#species").val(),
+                    hybridPercentRequirement: $("#hybridPercentRequirement").val()
+                },
+                success: function(result)
+                {
+                    if (result["success"])
+                    {
+                        $(".footer").html("");
+                        $(".footer").append("<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Skill saved.</strong></div>");
+                    }
+                    else
+                    {
+                        $(".footer").html("");
+                        $(".footer").append("<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>" + result['message'] + "</strong></div>");
+                    }     
+                },
+                error: function(result)
+                {
+                    $(".footer").html("");
+                    $(".footer").append("<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Error occured.</strong></div>");
+                }});
+            };
+            
+            function loadSkill(id)
+            {
+                $("#skills-tab").hide();
+                $("#skill-tab").show();
+                $("#create-button").hide();
+                $("#modify-button").show();
+                $.ajax({url: baseurl + id, type: 'GET',
+                success: function(result)
+                {
+                    if (result["success"])
+                    {
+                        $("#name").val(result["data"]["name"]);
+                        $("#description").val(result["data"]["description"]);
+                        $("#species").val(result["data"]["species"]);
+                        $("#hybridPercentRequirement").val(result["data"]["hybridPercentRequirement"]);
+                        $("#skillId").val(result["data"]["skillId"]);
+                    }
+                    else
+                    {
+                        $(".footer").html("");
+                        $(".footer").append("<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>" + result["message"] + "</strong></div>");
+                    }
+                },
+                error: function(result)
+                {
+                    $(".footer").html("");
+                    $(".footer").append("<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Error loading skill.</strong></div>");
+                }});
+            };
+            
+            function showSkillsSpecies()
+            {
+                var species = [];
+                var percentage = [];
+                result = $("#speciespercentage").val();
+                array = result.split(",");
+                for (i = 0; i < array.length; i += 2)
+                {
+                    species.push(array[i]);
+                    percentage.push(array[i + 1]);
+                }
+                $.ajax({url: baseurl + "skillsofspecies", type: 'GET',
+                    data:
+                    {
+                        species: JSON.stringify(species),
+                        percentage: JSON.stringify(percentage)
+                    },
+                    success: function(result)
+                    {
+                        if (result["success"])
+                        {
+                            $("#specresult > tbody").html("");
+                            if (result["data"].length == 0)
+                            {
+                                $("#specresult > tbody").append("<tr><td colspan='4'>No skills found</td><td style='display: none;'></td><td style='display: none;'></td><td style='display: none;'></td>");
+                            }
+                            else
+                            {
+                                for (var i in result["data"])
+                                {
+                                    var item = result["data"][i];
+                                    $("#specresult > tbody").append("<tr><td>" + item["skillId"] + "</td><td>" + item["name"] + "</td><td>" + item["description"] + "</td><td>" + item["species"] + "</td><td>" + item["hybridPercentRequirement"] + "</td></tr>");
+                                }
+                            }
+                            $('#specresult').DataTable();
+                            $("#specresult").show();
+                        }
+                        else
+                        {
+                            $(".footer").html("");
+                            $(".footer").append("<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>" + result["message"] + "</strong></div>");
+                        }
+                    },
+                    error: function(result)
+                    {
+                        $(".footer").html("");
+                        $(".footer").append("<div class='alert alert-danger alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Error occured.</strong></div>");
+                    }
+                });
+            };
+        </script>
+    </body>
+</html>
