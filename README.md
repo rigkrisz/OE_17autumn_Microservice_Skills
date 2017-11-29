@@ -1,5 +1,5 @@
 # OE_17autumn_Microservice_Skills
-Hősök tulajdonsgai
+Hősök tulajdonságai
 
 Erőteljesen az előzőleg elkészült verzíó mintájára Dropwizard környezetben.<br/>
 <br/>
@@ -37,5 +37,5 @@ hybridPercentRequirement - Integer<br/>
 <br/>
 GET http://80.211.148.10:8080/skills/skillsofspecies<br/>
 query => species=["faj1","faj2"]&percentage=["faj1%","faj2%"]<br/>
-example: http://80.211.148.10:8080/skills/skillsofspecies?species=[%22dwarf%22%2C%22human%22]&percentage=[%2290%22%2C%2210%22]<br/>
+example: http://80.211.148.10:8080/skills/skillsofspecies?species=["dwarf","human"]&percentage=["90","10"]<br/>
 Hybrid faj kombinációk alapján adja vissza az elérhető skilleket.<br/>
