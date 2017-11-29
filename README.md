@@ -2,6 +2,7 @@
 Hősök tulajdonságai
 
 Erőteljesen az előzőleg elkészült verzió mintájára Dropwizard környezetben.<br/>
+https://github.com/HomeWorksJava/OE_17autumn_Microservice_Combat
 <br/>
 Weboldal címe: http://80.211.148.10/<br/>
 <br/>
