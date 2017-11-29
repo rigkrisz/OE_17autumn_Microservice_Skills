@@ -1,7 +1,7 @@
 # OE_17autumn_Microservice_Skills
 Hősök tulajdonságai
 
-Erőteljesen az előzőleg elkészült verzíó mintájára Dropwizard környezetben.<br/>
+Erőteljesen az előzőleg elkészült verzió mintájára Dropwizard környezetben.<br/>
 <br/>
 Weboldal címe: http://80.211.148.10/<br/>
 <br/>
