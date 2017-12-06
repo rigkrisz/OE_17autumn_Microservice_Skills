@@ -1,5 +1,14 @@
-# OE_17autumn_Microservice_Skills
+﻿# OE_17autumn_Microservice_Skills
 Hősök tulajdonságai
+
+SPRINGBOOT (SkillsService és SkillsClientApp): <br/>
+E48AH0 – Szabó Gergely Krisztián.<br/>
+Költözés https://github.com/HomeWorksJava/OE_17autumn_Microservice_Combat repóról ide. <br/>
+Weboldal címe: http://18.217.2.245/ <br/>
+API Elérése: http://18.217.2.245:8080/myapp/application.wadl <br/>
+
+
+DROPWIZARD:
 
 Erőteljesen az előzőleg elkészült verzió mintájára Dropwizard környezetben.<br/>
 https://github.com/HomeWorksJava/OE_17autumn_Microservice_Combat<br/>
@@ -40,3 +49,4 @@ GET http://80.211.148.10:8080/skills/skillsofspecies<br/>
 query => species=["faj1","faj2"]&percentage=["faj1%","faj2%"]<br/>
 example: http://80.211.148.10:8080/skills/skillsofspecies?species=["dwarf","human"]&percentage=["90","10"]<br/>
 Hybrid faj kombinációk alapján adja vissza az elérhető skilleket.<br/>
+

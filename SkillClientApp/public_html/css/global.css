@@ -1,0 +1,38 @@
+        html, body {
+		height: 100%;
+	}
+        .background {
+		background-image:url("../img/background.png");
+		background-size:cover;
+		background-repeat:no-repeat;
+		background-position:center;
+	}
+        .container {
+            background-color:white;
+            padding:15px;
+        }
+        .cbutton {
+		background-color:rgba(0,0,0,0.5);
+		font-family:arial;
+		font-size:18px;
+		padding:10px;
+		width:250px;
+                height:50px;
+		display:inline-block;
+		border:1px solid black;
+                text-align: center;
+                position:relative;
+		left:50%;
+		transform: translate(-50%,0);
+                margin-top:10px;
+		margin-right:-50%;
+                color:white !important;
+                text-decoration:none !important;
+	}
+        .cbutton:hover {
+            color:yellow !important;
+        }
+        .hidden {
+            display:none;
+        }
+
