@@ -1,7 +1,7 @@
 ﻿# OE_17autumn_Microservice_Skills
 Hősök tulajdonságai
 
-SPRINGBOOT (SkillsService és SkillsClientApp): <br/>
+Jersey (SkillsService és SkillsClientApp): <br/>
 E48AH0 – Szabó Gergely Krisztián.<br/>
 Költözés https://github.com/HomeWorksJava/OE_17autumn_Microservice_Combat repóról ide. <br/>
 Weboldal címe: http://18.217.2.245/ <br/>
