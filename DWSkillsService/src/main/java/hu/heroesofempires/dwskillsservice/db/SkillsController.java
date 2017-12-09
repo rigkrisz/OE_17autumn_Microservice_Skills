@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class SkillsController
 {
-    static String Address = "jdbc:mysql://80.211.148.10:3306/SkillsDB";
+    static String Address = "jdbc:mysql://localhost:3306/SkillsDB";
     static String User = "hallgato";
     static String Password = "hallgato";
     static String Table = "Skills";
