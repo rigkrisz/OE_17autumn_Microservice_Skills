@@ -50,3 +50,7 @@ query => species=["faj1","faj2"]&percentage=["faj1%","faj2%"]<br/>
 example: http://80.211.148.10:8080/skills/skillsofspecies?species=["dwarf","human"]&percentage=["90","10"]<br/>
 Hybrid faj kombinációk alapján adja vissza az elérhető skilleket.<br/>
 
+SpringBoot:
+IXYZII - Rigler Nándor Krisztián
+Azért készült SpringBootban végül mert nem tudtam a Wildfly Swarm-ot sehogy sem működésre bírni és sok utánaolvasás után úgy láttam ezzel egyszerűbb lehet és az is volt.
+Valamiért nem tudok ide feltölteni, nincs hozzá push jogom azt írja és ip-t sem kaptam, legalábbis a moodle-ön nincs fent, úgyhogy jövőhét szerdán(12.13.), beviszem személyesen a feladatomat.
